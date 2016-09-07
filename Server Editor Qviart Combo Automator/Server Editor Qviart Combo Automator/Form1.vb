@@ -6,7 +6,7 @@ Public Class Form1
         Dim server, port, user, password, filename As String
         Dim listOfServers As List(Of String) = New List(Of String)
 
-        filename = "C:\Users\lucijose\Dropbox\Qviart\" & Now.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture)
+        filename = "C:\Users\pepo\Dropbox\Qviart\" & Now.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture)
         Dim rawData As String = New System.Net.WebClient().DownloadString("https://docs.google.com/document/d/1CiYpWvLGyro-lXRHABpFC1jgD4XeACmNhas6UTSH3AQ")
         currentPosition = InStr(1, rawData, "\nC: ") ' Find first server inside downloaded raw data
         For index As Integer = 1 To 9
@@ -38,7 +38,8 @@ Public Class Form1
 
         Dim seqc As Process
         seqc = New Process()
-        seqc = Process.Start("C:\seqc\seqc.exe")
+        'seqc = Process.Start("C:\seqc\seqc.exe")
+        seqc = Process.Start("C:\Utils\Server Editor\Server Editor.exe")
         System.Threading.Thread.Sleep(500) ' Launch the app and wait 0.500 sec to load
         AppActivate(seqc.Id) ' Set focus to the app
         My.Computer.Keyboard.SendKeys("~", True)
@@ -50,12 +51,16 @@ Public Class Form1
             My.Computer.Keyboard.SendKeys("{DOWN}{TAB}", True)
             System.Windows.Forms.Clipboard.SetText(listOfServers.ElementAt(index * 4 + 0))
             My.Computer.Keyboard.SendKeys("^v{TAB}", True)
+            System.Threading.Thread.Sleep(100)
             System.Windows.Forms.Clipboard.SetText(listOfServers.ElementAt(index * 4 + 1))
             My.Computer.Keyboard.SendKeys("^v{TAB}", True)
+            System.Threading.Thread.Sleep(100)
             System.Windows.Forms.Clipboard.SetText(listOfServers.ElementAt(index * 4 + 2))
             My.Computer.Keyboard.SendKeys("^v{TAB}", True)
+            System.Threading.Thread.Sleep(100)
             System.Windows.Forms.Clipboard.SetText(listOfServers.ElementAt(index * 4 + 3))
             My.Computer.Keyboard.SendKeys("^v{TAB}~", True)
+
             System.Threading.Thread.Sleep(500)
         Next
         My.Computer.Keyboard.SendKeys("{TAB}{TAB}{TAB}~", True)
@@ -64,10 +69,6 @@ Public Class Form1
         My.Computer.Keyboard.SendKeys("^v~", True)
         seqc.Kill()
         Close()
+    End Sub
 
-        Private Function getItem(loop As interger)
-        If [loop] < 8 Then
-
-        End If
-        End Sub
 End Class

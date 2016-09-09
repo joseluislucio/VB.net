@@ -6,7 +6,7 @@ Public Class Form1
         Dim server, port, user, password, filename, serverEditor As String
         Dim listOfServers As List(Of String) = New List(Of String)
         'filename = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\Dropbox\Qviart\" & Now.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture)
-        filename = "C:\" & Now.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture)
+        filename = System.AppDomain.CurrentDomain.BaseDirectory() & Now.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture)
         serverEditor = System.AppDomain.CurrentDomain.BaseDirectory() & "Server Editor.exe"
         Dim rawData As String = New System.Net.WebClient().DownloadString("https://docs.google.com/document/d/1CiYpWvLGyro-lXRHABpFC1jgD4XeACmNhas6UTSH3AQ")
         currentPosition = InStr(1, rawData, "\nC: ") ' Find first server inside downloaded raw data

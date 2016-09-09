@@ -3,10 +3,11 @@
 Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
         Dim firstSpace, secondSpace, currentPosition As Integer
-        Dim server, port, user, password, filename As String
+        Dim server, port, user, password, filename, serverEditor As String
         Dim listOfServers As List(Of String) = New List(Of String)
-
-        filename = "C:\Users\pepo\Dropbox\Qviart\" & Now.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture)
+        'filename = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\Dropbox\Qviart\" & Now.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture)
+        filename = "C:\" & Now.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture)
+        serverEditor = System.AppDomain.CurrentDomain.BaseDirectory() & "Server Editor.exe"
         Dim rawData As String = New System.Net.WebClient().DownloadString("https://docs.google.com/document/d/1CiYpWvLGyro-lXRHABpFC1jgD4XeACmNhas6UTSH3AQ")
         currentPosition = InStr(1, rawData, "\nC: ") ' Find first server inside downloaded raw data
         For index As Integer = 1 To 9
@@ -38,34 +39,42 @@ Public Class Form1
 
         Dim seqc As Process
         seqc = New Process()
-        'seqc = Process.Start("C:\seqc\seqc.exe")
-        seqc = Process.Start("C:\Utils\Server Editor\Server Editor.exe")
-        System.Threading.Thread.Sleep(500) ' Launch the app and wait 0.500 sec to load
+        seqc = Process.Start(serverEditor)
+        System.Threading.Thread.Sleep(2000) ' Launch the app and wait 0.500 sec to load
         AppActivate(seqc.Id) ' Set focus to the app
         My.Computer.Keyboard.SendKeys("~", True)
         System.Threading.Thread.Sleep(200)
+        AppActivate(seqc.Id)
         My.Computer.Keyboard.SendKeys("{TAB}", True)
         For index = 0 To 8
+            AppActivate(seqc.Id)
             My.Computer.Keyboard.SendKeys("~", True)
             System.Threading.Thread.Sleep(200)
+            AppActivate(seqc.Id)
             My.Computer.Keyboard.SendKeys("{DOWN}{TAB}", True)
+            AppActivate(seqc.Id)
             System.Windows.Forms.Clipboard.SetText(listOfServers.ElementAt(index * 4 + 0))
+            AppActivate(seqc.Id)
             My.Computer.Keyboard.SendKeys("^v{TAB}", True)
             System.Threading.Thread.Sleep(100)
             System.Windows.Forms.Clipboard.SetText(listOfServers.ElementAt(index * 4 + 1))
+            AppActivate(seqc.Id)
             My.Computer.Keyboard.SendKeys("^v{TAB}", True)
             System.Threading.Thread.Sleep(100)
             System.Windows.Forms.Clipboard.SetText(listOfServers.ElementAt(index * 4 + 2))
+            AppActivate(seqc.Id)
             My.Computer.Keyboard.SendKeys("^v{TAB}", True)
             System.Threading.Thread.Sleep(100)
             System.Windows.Forms.Clipboard.SetText(listOfServers.ElementAt(index * 4 + 3))
+            AppActivate(seqc.Id)
             My.Computer.Keyboard.SendKeys("^v{TAB}~", True)
-
             System.Threading.Thread.Sleep(500)
         Next
+        AppActivate(seqc.Id)
         My.Computer.Keyboard.SendKeys("{TAB}{TAB}{TAB}~", True)
         System.Threading.Thread.Sleep(500)
         System.Windows.Forms.Clipboard.SetText(filename)
+        AppActivate(seqc.Id)
         My.Computer.Keyboard.SendKeys("^v~", True)
         seqc.Kill()
         Close()

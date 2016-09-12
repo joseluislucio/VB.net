@@ -75,8 +75,8 @@ Public Class Form1
         System.Threading.Thread.Sleep(500)
         System.Windows.Forms.Clipboard.SetText(filename)
         AppActivate(seqc.Id)
-        My.Computer.Keyboard.SendKeys("^v~", True)
-        seqc.Kill()
+        My.Computer.Keyboard.SendKeys("^v", True)
+        'seqc.Kill()
         Close()
     End Sub
 

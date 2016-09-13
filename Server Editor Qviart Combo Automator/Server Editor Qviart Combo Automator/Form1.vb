@@ -7,10 +7,11 @@ Public Class Form1
         Dim listOfServers As List(Of String) = New List(Of String)
         'filename = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\Dropbox\Qviart\" & Now.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture)
         filename = System.AppDomain.CurrentDomain.BaseDirectory() & Now.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture)
-        serverEditor = System.AppDomain.CurrentDomain.BaseDirectory() & "Server Editor.exe"
+        serverEditor = System.AppDomain.CurrentDomain.BaseDirectory() & "Server Editor Qviart Combo.exe"
         Dim rawData As String = New System.Net.WebClient().DownloadString("https://docs.google.com/document/d/1CiYpWvLGyro-lXRHABpFC1jgD4XeACmNhas6UTSH3AQ")
         currentPosition = InStr(1, rawData, "\nC: ") ' Find first server inside downloaded raw data
-        For index As Integer = 1 To 9
+
+        For index As Integer = 0 To 7 'Change to 8 before release
             firstSpace = InStr(currentPosition, rawData, " ")
             currentPosition = firstSpace + 1
             secondSpace = InStr(currentPosition, rawData, " ")
@@ -28,7 +29,7 @@ Public Class Form1
             currentPosition = secondSpace
             firstSpace = InStr(currentPosition, rawData, " ")
             currentPosition = firstSpace + 1
-            secondSpace = InStr(currentPosition, rawData, "C:") - 2
+            secondSpace = InStr(currentPosition, rawData, "\n")
             password = Mid(rawData, firstSpace + 1, (secondSpace - firstSpace - 1))
             currentPosition = secondSpace
             listOfServers.Add(server)
@@ -46,7 +47,7 @@ Public Class Form1
         System.Threading.Thread.Sleep(200)
         AppActivate(seqc.Id)
         My.Computer.Keyboard.SendKeys("{TAB}", True)
-        For index = 0 To 8
+        For index = 0 To 7 'Change to 8 before release 
             AppActivate(seqc.Id)
             My.Computer.Keyboard.SendKeys("~", True)
             System.Threading.Thread.Sleep(200)
@@ -75,8 +76,8 @@ Public Class Form1
         System.Threading.Thread.Sleep(500)
         System.Windows.Forms.Clipboard.SetText(filename)
         AppActivate(seqc.Id)
-        My.Computer.Keyboard.SendKeys("^v", True)
-        'seqc.Kill()
+        My.Computer.Keyboard.SendKeys("^v~", True)
+        seqc.Kill()
         Close()
     End Sub
 

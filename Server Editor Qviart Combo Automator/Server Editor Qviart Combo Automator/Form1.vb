@@ -11,17 +11,26 @@ Public Class Form1
         '║ RETURNED VALUES: None                                                      ║
         '╚════════════════════════════════════════════════════════════════════════════╝
 
-        Dim firstSpace, secondSpace, currentPosition As Integer
-        Dim server, port, user, password, filename, serverEditor As String
+        Dim firstSpace, secondSpace, currentPosition, rawDataLenght, lines As Integer
+        Dim server, port, user, password, filename, serverEditor, test As String
         Dim listOfServers As List(Of String) = New List(Of String)
         Dim rawData As String = New System.Net.WebClient().DownloadString("https://docs.google.com/document/d/1CiYpWvLGyro-lXRHABpFC1jgD4XeACmNhas6UTSH3AQ")
         filename = System.AppDomain.CurrentDomain.BaseDirectory() & Now.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture)
         serverEditor = System.AppDomain.CurrentDomain.BaseDirectory() & "Server Editor Qviart Combo.exe"
-        currentPosition = InStr(1, rawData, "\nC: ") ' Find first server inside downloaded raw data
+        rawDataLenght = Len(rawData)
+        lines = 0
+        currentPosition = 1
+        'This loop count the numbres of CCCAM lines published
+        While (InStr(currentPosition, rawData, "\nC: ") <> 0)
+            lines = lines + 1
+            currentPosition = InStr(currentPosition, rawData, "\nC: ") + 1
+        End While
+        lines = lines - 1
 
+        currentPosition = InStr(1, rawData, "\nC: ") ' Find first server inside downloaded raw data
         'TODO: Check errors in case of unexpected feed format
         'Loop to create a list with al needed elements. 
-        For index As Integer = 0 To 8
+        For index = 0 To lines
             firstSpace = InStr(currentPosition, rawData, " ")
             currentPosition = firstSpace + 1
             secondSpace = InStr(currentPosition, rawData, " ")
@@ -57,7 +66,7 @@ Public Class Form1
         System.Threading.Thread.Sleep(200)
         AppActivate(seqc.Id)
         My.Computer.Keyboard.SendKeys("{TAB}", True)
-        For index = 0 To 8
+        For index = 0 To lines
             AppActivate(seqc.Id)
             My.Computer.Keyboard.SendKeys("~", True)
             System.Threading.Thread.Sleep(200)
@@ -86,8 +95,8 @@ Public Class Form1
         System.Threading.Thread.Sleep(500)
         System.Windows.Forms.Clipboard.SetText(filename)
         AppActivate(seqc.Id)
-        My.Computer.Keyboard.SendKeys("^v~", True)
-        seqc.Kill()
+        My.Computer.Keyboard.SendKeys("^v", True)
+        'seqc.Kill()
         Close()
     End Sub
 

@@ -2,16 +2,26 @@
 
 Public Class Form1
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
+        '╔══════════╦════════════════════════════════════════════════╦═════════╦══════╗ 
+        '║ FUNCTION ║ Form1_Load                                     ║ VERSION ║ 0.50 ║
+        '╠══════════╩════════════════════════════════════════════════╩═════════╩══════╣
+        '║ DESCRIPTION: App to automate CCCAM file creation for Qviart Combo using    ║
+        '║              Server Editor Qviart Combo.exe software                       ║
+        '║ PARAMETERS:  None                                                          ║
+        '║ RETURNED VALUES: None                                                      ║
+        '╚════════════════════════════════════════════════════════════════════════════╝
+
         Dim firstSpace, secondSpace, currentPosition As Integer
         Dim server, port, user, password, filename, serverEditor As String
         Dim listOfServers As List(Of String) = New List(Of String)
-        'filename = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) & "\Dropbox\Qviart\" & Now.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture)
+        Dim rawData As String = New System.Net.WebClient().DownloadString("https://docs.google.com/document/d/1CiYpWvLGyro-lXRHABpFC1jgD4XeACmNhas6UTSH3AQ")
         filename = System.AppDomain.CurrentDomain.BaseDirectory() & Now.ToString("yyyyMMddHHmmss", CultureInfo.InvariantCulture)
         serverEditor = System.AppDomain.CurrentDomain.BaseDirectory() & "Server Editor Qviart Combo.exe"
-        Dim rawData As String = New System.Net.WebClient().DownloadString("https://docs.google.com/document/d/1CiYpWvLGyro-lXRHABpFC1jgD4XeACmNhas6UTSH3AQ")
         currentPosition = InStr(1, rawData, "\nC: ") ' Find first server inside downloaded raw data
 
-        For index As Integer = 0 To 7 'Change to 8 before release
+        'TODO: Check errors in case of unexpected feed format
+        'Loop to create a list with al needed elements. 
+        For index As Integer = 0 To 8
             firstSpace = InStr(currentPosition, rawData, " ")
             currentPosition = firstSpace + 1
             secondSpace = InStr(currentPosition, rawData, " ")
@@ -41,13 +51,13 @@ Public Class Form1
         Dim seqc As Process
         seqc = New Process()
         seqc = Process.Start(serverEditor)
-        System.Threading.Thread.Sleep(2000) ' Launch the app and wait 0.500 sec to load
+        System.Threading.Thread.Sleep(2000) ' Launch the app and wait 2 sec to load
         AppActivate(seqc.Id) ' Set focus to the app
         My.Computer.Keyboard.SendKeys("~", True)
         System.Threading.Thread.Sleep(200)
         AppActivate(seqc.Id)
         My.Computer.Keyboard.SendKeys("{TAB}", True)
-        For index = 0 To 7 'Change to 8 before release 
+        For index = 0 To 8
             AppActivate(seqc.Id)
             My.Computer.Keyboard.SendKeys("~", True)
             System.Threading.Thread.Sleep(200)

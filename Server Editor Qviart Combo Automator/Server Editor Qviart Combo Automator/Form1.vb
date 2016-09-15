@@ -20,7 +20,7 @@ Public Class Form1
         rawDataLenght = Len(rawData)
         lines = 0
         currentPosition = 1
-        'This loop count the numbres of CCCAM lines published
+        'This loop counts the number of published CCCAM lines
         While (InStr(currentPosition, rawData, "\nC: ") <> 0)
             lines = lines + 1
             currentPosition = InStr(currentPosition, rawData, "\nC: ") + 1

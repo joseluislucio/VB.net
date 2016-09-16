@@ -1,15 +1,15 @@
 ﻿Imports System.Globalization
 
 Public Class Form1
+    '╔══════════╦════════════════════════════════════════════════╦═════════╦══════╗ 
+    '║ FUNCTION ║ Form1_Load                                     ║ VERSION ║ 0.50 ║
+    '╠══════════╩════════════════════════════════════════════════╩═════════╩══════╣
+    '║ DESCRIPTION: Automate CCCAM file creation for Qviart Combo using           ║
+    '║              Server Editor Qviart Combo.exe software                       ║
+    '║ PARAMETERS:  None                                                          ║
+    '║ RETURNED VALUES: None                                                      ║
+    '╚════════════════════════════════════════════════════════════════════════════╝
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
-        '╔══════════╦════════════════════════════════════════════════╦═════════╦══════╗ 
-        '║ FUNCTION ║ Form1_Load                                     ║ VERSION ║ 0.50 ║
-        '╠══════════╩════════════════════════════════════════════════╩═════════╩══════╣
-        '║ DESCRIPTION: App to automate CCCAM file creation for Qviart Combo using    ║
-        '║              Server Editor Qviart Combo.exe software                       ║
-        '║ PARAMETERS:  None                                                          ║
-        '║ RETURNED VALUES: None                                                      ║
-        '╚════════════════════════════════════════════════════════════════════════════╝
 
         Dim firstSpace, secondSpace, currentPosition, rawDataLenght, lines As Integer
         Dim server, port, user, password, filename, serverEditor, test As String
